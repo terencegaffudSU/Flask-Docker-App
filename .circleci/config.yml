@@ -57,7 +57,7 @@ workflows:
               only: release
       - deploy:
           requires:
-            - build:
+            - build
           filters:
             branches:
               only: release
