@@ -29,7 +29,10 @@ jobs:
 workflows:
   main_workflow:
     jobs:
-      - build
+      - build:
+          filters:
+              branches:
+                only: main
   tag_workflow:
     jobs:
       - build:
@@ -53,6 +56,8 @@ workflows:
             branches:
               only: release
       - deploy:
+          requires:
+            - build:
           filters:
             branches:
               only: release
