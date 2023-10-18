@@ -48,7 +48,10 @@ workflows:
               only: /^v./
   deploy_workflow:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only: release
       - deploy:
           filters:
             branches:
