@@ -1,0 +1,59 @@
+version: 2.1
+orbs:
+  python: circleci/python@2.0.3
+  docker: circleci/docker@2.1.4 
+jobs:
+  build:
+    executor: python/default
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+  publish:
+    executor: docker/docker 
+    steps:
+      - setup_remote_docker 
+      - checkout
+      - docker/check
+      - docker/build:
+          image: terencegaffudsu/flask-demo
+          tag: <<pipeline.git.tag>>
+      - docker/push:
+          image: terencegaffudsu/flask-demo
+          tag: <<pipeline.git.tag>>
+  deploy:
+    steps:
+      - run: |
+          echo "deploying to Heroku"
+workflows:
+  main_workflow:
+    jobs:
+      - build
+  tag_workflow:
+    jobs:
+      - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v./
+      - publish
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v./
+  deploy_workflow:
+    jobs:
+      - build
+      - deploy
+          filters:
+            branches:
+              only: release
+                    
+
+
+
+    
