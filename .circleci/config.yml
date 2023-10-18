@@ -48,7 +48,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v./
+              only: /^v.*/
   deploy_workflow:
     jobs:
       - build:
