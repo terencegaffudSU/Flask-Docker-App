@@ -22,6 +22,7 @@ jobs:
           image: terencegaffudsu/flask-demo
           tag: <<pipeline.git.tag>>
   deploy:
+    executor: docker/docker
     steps:
       - run: |
           echo "deploying to Heroku"
