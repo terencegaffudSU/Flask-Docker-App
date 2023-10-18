@@ -31,13 +31,13 @@ workflows:
       - build
   tag_workflow:
     jobs:
-      - build
+      - build:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /^v./
-      - publish
+      - publish:
           requires:
             - build
           filters:
@@ -48,7 +48,7 @@ workflows:
   deploy_workflow:
     jobs:
       - build
-      - deploy
+      - deploy:
           filters:
             branches:
               only: release
