@@ -7,7 +7,7 @@ def hello_geek():
 
 @app.route("/welcome")
 def welcome():
-    return "<h1>Welcome to the welcome page</h1>"
+    return "<h1>Welcome to the welcome page! Release</h1>"
 
 if __name__ == "__main__":
     app.run(debug=True)
